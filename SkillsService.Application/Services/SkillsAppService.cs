@@ -21,18 +21,20 @@ public class SkillsAppService
         return await _catalogRepository.GetAllAsync(ct);
     }
 
-    public async Task<IEnumerable<UserSkill>>GetUserSkillsAsync(OwnerId ownerId, CancellationToken ct)
+    public async Task<IEnumerable<UserSkill>>GetUserSkillsAsync(string ownerId, CancellationToken ct)
     {
-        return await _userSkillRepository.GetByOwnerIdAsync(ownerId, ct);
+        var owner = OwnerId.From(ownerId);
+        return await _userSkillRepository.GetByOwnerIdAsync(owner, ct);
     }
 
-    public async Task<UserSkill> AddUserSkillAsync(OwnerId ownerId, Guid skillCatalogId, CancellationToken ct)
+    public async Task<UserSkill> AddUserSkillAsync(string ownerId, Guid skillCatalogId, CancellationToken ct)
     {
-        var existing = await _userSkillRepository.GetByOwnerIdAsync(ownerId, ct);
+        var owner = OwnerId.From(ownerId);
+        var existing = await _userSkillRepository.GetByOwnerIdAsync(owner, ct);
         if(existing.Any(s => s.SkillCatalogId == skillCatalogId))
             throw new DomainException("User already has this skill.");
 
-        var userSkill = UserSkill.Create(ownerId, skillCatalogId);
+        var userSkill = UserSkill.Create(owner, skillCatalogId);
         await _userSkillRepository.AddAsync(userSkill, ct);
         return userSkill;
     }

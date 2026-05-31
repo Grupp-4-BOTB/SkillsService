@@ -13,5 +13,6 @@ public record OwnerId
         Value = value.Trim();
     }
 
+    public static OwnerId From(string value) => new OwnerId(value);
     public override string ToString() => Value;
 }
