@@ -1,4 +1,6 @@
-﻿namespace SkillsService.Domain.ValueObjects;
+﻿using SkillsService.Domain.Exceptions;
+
+namespace SkillsService.Domain.ValueObjects;
 
 public record OwnerId
 {
