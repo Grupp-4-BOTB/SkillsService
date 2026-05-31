@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SkillsService.Domain.Entities;
+using SkillsService.Domain.ValueObjects;
 
-namespace SkillsService.Domain.Repositories
+namespace SkillsService.Domain.Repositories;
+
+public interface IUserSkillRepository
 {
-    internal interface IUserSkillRepository
-    {
-    }
+    Task<IEnumerable<UserSkill>> GetByOwnerIdAsync(OwnerId ownerId, CancellationToken ct);
+    Task AddAsync(UserSkill userSkill, CancellationToken ct);
+    Task<UserSkill?> GetByIdAsync(Guid id, CancellationToken ct);
+    Task DeleteAsync(UserSkill userSkill, CancellationToken ct);
 }
