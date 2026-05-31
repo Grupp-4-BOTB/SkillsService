@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SkillsService.Application/SkillsService.Application.csproj" />
+  <Project Path="SkillsService.Domain/SkillsService.Domain.csproj" />
+  <Project Path="SkillsService.Infrastructure/SkillsService.Infrastructure.csproj" />
+  <Project Path="SkillsService.Presentation.API/SkillsService.Presentation.API.csproj" />
+</Solution>
