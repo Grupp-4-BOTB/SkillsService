@@ -1,4 +1,5 @@
 ﻿using SkillsService.Domain.Entities;
+using SkillsService.Domain.Exceptions;
 using SkillsService.Domain.Repositories;
 using SkillsService.Domain.ValueObjects;
 
@@ -27,6 +28,10 @@ public class SkillsAppService
 
     public async Task<UserSkill> AddUserSkillAsync(OwnerId ownerId, Guid skillCatalogId, CancellationToken ct)
     {
+        var existing = await _userSkillRepository.GetByOwnerIdAsync(ownerId, ct);
+        if(existing.Any(s => s.SkillCatalogId == skillCatalogId))
+            throw new DomainException("User already has this skill.");
+
         var userSkill = UserSkill.Create(ownerId, skillCatalogId);
         await _userSkillRepository.AddAsync(userSkill, ct);
         return userSkill;
