@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SkillsService.Domain.Entities;
+using SkillsService.Domain.Repositories;
 
 namespace SkillsService.Infrastructure.Persistance.Repositories;
 
-public class SkillCatalogRepository
+public class SkillCatalogRepository : ISkillCatalogRepository
 {
     private readonly SkillsDbContext _context;
 
