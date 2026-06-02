@@ -6,4 +6,5 @@ public interface ISkillCatalogRepository
 {
     Task<IEnumerable<SkillCatalog>> GetAllAsync(CancellationToken ct);
     Task<SkillCatalog?> GetByIdAsync(Guid id, CancellationToken ct);
+    Task AddAsync(SkillCatalog skill, CancellationToken ct);
 }

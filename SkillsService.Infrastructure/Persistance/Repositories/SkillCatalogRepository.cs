@@ -24,4 +24,10 @@ public class SkillCatalogRepository : ISkillCatalogRepository
         return await _context.SkillCatalog
             .FirstOrDefaultAsync(s => s.Id == id, ct);
     } 
+
+    public async Task AddAsync(SkillCatalog skill, CancellationToken ct)
+    {
+        await _context.SkillCatalog.AddAsync(skill, ct);
+        await _context.SaveChangesAsync(ct);
+    }
 }
