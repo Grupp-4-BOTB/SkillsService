@@ -50,11 +50,5 @@ public class SkillsDbContext : DbContext
             new { Id = Guid.Parse("a1b2c3d4-0009-0000-0000-000000000000"), Name = "Product Design" }
 
         );
-
-        modelBuilder.Entity<SkillCatalog>().HasData(
-            new SkillCatalog { Id = 1, Name = "C#" },
-            new SkillCatalog { Id = 2, Name = "Java" },
-            new SkillCatalog { Id = 3, Name = "Python" }
-        );
     }
 }
