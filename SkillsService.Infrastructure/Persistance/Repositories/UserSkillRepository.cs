@@ -16,10 +16,17 @@ public class UserSkillRepository : IUserSkillRepository
 
     public async Task<IEnumerable<UserSkill>> GetByOwnerIdAsync(OwnerId ownerId, CancellationToken ct)
     {
-        return await _context.UserSkills
+        var allSkills = await _context.UserSkills
             .Include(s => s.SkillCatalog)
-            .Where(s => s.OwnerId == ownerId)
             .ToListAsync(ct);
+
+        return allSkills.Where(s => s.OwnerId.Value == ownerId.Value);
+
+        //return await _context.UserSkills
+        //    .Include(s => s.SkillCatalog)
+        //    .AsEnumerable()
+        //    .Where(s => s.OwnerId.Value == ownerId.Value)
+        //    .ToList();
     }
     public async Task<UserSkill?> GetByIdAsync(Guid id, CancellationToken ct)
     {
