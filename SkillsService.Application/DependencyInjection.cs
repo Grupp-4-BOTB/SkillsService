@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SkillsService.Application.Services;
 
 namespace SkillsService.Application;
 
