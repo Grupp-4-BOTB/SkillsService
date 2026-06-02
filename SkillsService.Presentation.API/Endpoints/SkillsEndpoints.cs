@@ -23,6 +23,10 @@ namespace SkillsService.Presentation.API.Endpoints
             group.MapDelete("/{id:guid}", DeleteUserSkillAsync)
                 .Produces(StatusCodes.Status204NoContent)
                 .Produces(StatusCodes.Status404NotFound);
+
+            group.MapPost("/customSkill", AddCustomSkillAsync)
+                .Produces(StatusCodes.Status201Created)
+                .Produces(StatusCodes.Status400BadRequest);
         }
 
         private static async Task<IResult> GetCatalogAsync(SkillsAppService service, CancellationToken ct)
@@ -55,8 +59,22 @@ namespace SkillsService.Presentation.API.Endpoints
             await service.DeleteUserSkillAsync(id, ct);
             return Results.NoContent();
         }
+
+        private static async Task<IResult> AddCustomSkillAsync(AddCustomSkillRequest request, SkillsAppService service, CancellationToken ct)
+        {
+            try
+            {
+                var userSkill = await service.AddCustomSkillAsync(request.OwnerId, request.SkillName, ct);
+                return Results.Created($"/api/skills/{userSkill.Id}", userSkill);
+            }
+            catch (DomainException ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
+        }
     }
     public record AddUserSkillRequest(string OwnerId, Guid SkillCatalogId);
+    public record AddCustomSkillRequest(string OwnerId, string SkillName);
 }
 
 

@@ -48,4 +48,16 @@ public class SkillsAppService
 
         await _userSkillRepository.DeleteAsync(userSkill, ct);
     }
+
+    public async Task<UserSkill> AddCustomSkillAsync(string ownerId, string skillName, CancellationToken ct)
+    {
+        var owner = OwnerId.From(ownerId);
+
+        var catalogSkill = SkillCatalog.Create(skillName);
+        await _catalogRepository.AddAsync(catalogSkill, ct);
+
+        var userSkill = UserSkill.Create(owner, catalogSkill.Id);
+        await _userSkillRepository.AddAsync(userSkill, ct);
+        return userSkill;
+    }
 }
