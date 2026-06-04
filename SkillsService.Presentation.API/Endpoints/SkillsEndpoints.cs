@@ -1,5 +1,6 @@
 ﻿using SkillsService.Application.Services;
 using SkillsService.Domain.Exceptions;
+using SkillsService.Presentation.API.Security;
 
 namespace SkillsService.Presentation.API.Endpoints
 {
@@ -8,7 +9,8 @@ namespace SkillsService.Presentation.API.Endpoints
         public static void MapSkillsEndpoints(this WebApplication app)
         {
             var group = app.MapGroup("/api/skills")
-                .WithTags("Skills");
+                .WithTags("Skills")
+                .AddEndpointFilter<ApiKeyEndpointFilter>();
 
             group.MapGet("/catalog", GetCatalogAsync)
                 .Produces(StatusCodes.Status200OK);
